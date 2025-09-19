@@ -1,15 +1,16 @@
 import dotenv from 'dotenv'
+dotenv.config()
+
 import express from 'express'
 import { resolve } from 'path'
 
 //import homeRoutes from './src/routes/homeRoutes'
 import userRoutes from './src/routes/userRoutes'
 import tokenRoutes from './src/routes/tokenRoutes'
+import passwordRoutes from './src/routes/passwordRoutes'
 //import fotoRoutes from './src/routes/fotoRoutes'
 
 import './src/database'
-
-dotenv.config()
 
 class App {
   constructor() {
@@ -27,11 +28,13 @@ class App {
   }
 
   routes() {
-    //this.app.use('/', homeRoutes)
-    this.app.use('/users/', userRoutes)
-    this.app.use('/token/', tokenRoutes)
-    //this.app.use('/alunos/', alunoRoutes)
-    //this.app.use('/fotos/', fotoRoutes)
+    const apiRouter = express.Router()
+
+    apiRouter.use('/users/', userRoutes)
+    apiRouter.use('/token/', tokenRoutes)
+    apiRouter.use('/password/', passwordRoutes)
+
+    this.app.use('/api', apiRouter)
   }
 }
 
